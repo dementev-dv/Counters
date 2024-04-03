@@ -4,15 +4,15 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   19:14:01 03/15/2024
-// Design Name:   VCB4CLED
-// Module Name:   D:/frtk/Dementev/lab401/tf_VCB4CLED.v
+// Create Date:   14:51:51 03/22/2024
+// Design Name:   VCB4RE
+// Module Name:   D:/frtk/Dementev/lab401/tf_VCB4RE.v
 // Project Name:  lab401
 // Target Device:  
 // Tool versions:  
 // Description: 
 //
-// Verilog Test Fixture created by ISE for module: VCB4CLED
+// Verilog Test Fixture created by ISE for module: VCB4RE
 //
 // Dependencies:
 // 
@@ -22,49 +22,42 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module tf_VCB4CLED;
+module tf_VCB4RE;
 
 	// Inputs
-	reg ce;
-	reg up;
-	reg [3:0] di;
-	reg L;
 	reg clk;
-	reg clr;
+	reg ce;
+	reg R;
 
 	// Outputs
-	wire [3:0] Q;
-	wire CEO;
 	wire TC;
+	wire CEO;
+	wire [3:0] Q;
 
 	// Instantiate the Unit Under Test (UUT)
-	VCB4CLED uut (
-		.ce(ce), 
-		.up(up), 
-		.di(di), 
-		.L(L), 
+	VCB4RE uut (
 		.clk(clk), 
-		.clr(clr), 
-		.Q(Q), 
+		.ce(ce), 
+		.R(R), 
+		.TC(TC), 
 		.CEO(CEO), 
-		.TC(TC)
+		.Q(Q)
 	);
-	parameter Tclk = 20;
-	always begin clk = 1; #(Tclk/2); clk = 0; #(Tclk/2); end
 
+	parameter Tclk=20;
+	always begin clk=1; #(Tclk/2); clk=0; #(Tclk/2); end
+	
 	initial begin
-		// Initialize Inputs
+		clk = 0;
 		ce = 1;
-		up = 1;
-		di = 0;
-		L = 0;
-		clr = 0;
+		// Initialize Inputs
+		R = 0;
+		#380; R = 1;
+		#10; R = 0;
+		#200; R = 1;
 
 		// Wait 100 ns for global reset to finish
-		#495;		clr = 1;
-		#10; 		clr = 0; up = 0;
-		#495;	clr = 1;
-		
+		#100;
         
 		// Add stimulus here
 

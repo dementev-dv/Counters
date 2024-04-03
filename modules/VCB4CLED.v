@@ -33,7 +33,7 @@ module VCB4CLED(
 assign TC = up? (Q == (1 << 4) - 1): (Q == 0);
 assign CEO = ce & TC;
 
-always @(posedge clr or posedge clk) begin
+always @(posedge clr or posedge clk ) begin //or posedge btn
 	if (clr) Q <= 0;
 	else Q <= L? di: (up & ce)? Q+1: (!up & ce)? Q-1: Q;
 end

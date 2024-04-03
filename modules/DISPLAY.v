@@ -27,8 +27,8 @@ module DISPLAY(
 	output wire ce1ms
 );
 
-wire [3:0]dig;
-wire [3:0]adr_dig;
+wire [3:0]Dig;
+wire [3:0]Adr_dig;
 
 Gen4an DD1( .clk(clk), .q(Adr_dig), .ce(ce1ms), .an(AN)); 
 

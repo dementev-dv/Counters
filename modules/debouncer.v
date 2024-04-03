@@ -19,17 +19,18 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module debouncer(
-	input clk,
-	input btn_i,
-	
-	output reg [1:0]Q,
-	output wire btn_o
+	input BTN_IN, 
+	input ce1ms,
+	output wire BTN_OUT
 );
 
-always @(posedge clk) begin
-	Q[0] <= ~btn_i;
-	Q[1] <= Q[0]
-end
+reg Q1 = 0;
+reg Q2 = 0;
+assign BTN_OUT = Q1 & !Q2 & ce1ms;
 	
+always @ (negedge ce1ms) begin
+	Q1 <= BTN_IN;
+	Q2 <= BTN_IN & Q1 & ce1ms;
+end
 
 endmodule

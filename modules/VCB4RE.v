@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date:    18:51:37 02/16/2024 
+// Create Date:    15:09:34 03/22/2024 
 // Design Name: 
 // Module Name:    VCB4RE 
 // Project Name: 
@@ -18,20 +18,24 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module VCB4RE(
-	input clk,
-	input ce,
-	input r,
-	output wire TC,
-	output wire CEO,
-	output reg[3:0] Q=0
-);
+module VCB4RE (
+	input ce,   
+	output reg [3:0] Q = 0, 
+	input clk,    
+	output wire TC, 
+	input R,      
+	output wire CEO
+); 
 
-assign TC = &Q;
-assign CEO = ce & TC;
-
-always @(posedge clk) begin
-	Q <= r ? 0 : (ce ? Q + 1 : Q);
-end
+assign TC = (Q==15) ;  
+//Q0 & Q1 &...& Q'm-1 ==1
+assign CEO = ce & TC ;  
+//Сигналпереноса
+always @ (posedge clk) begin
+	Q  <=  R?  0  :  ce?  Q+1  :  Q;  
+	/* Если  R=1,  тосброс в  0,  
+	иначеесли  ce=1,  то "суммировать",
+	иначе "стоять"*/
+end  
 
 endmodule

@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date:    18:13:59 03/01/2024 
+// Create Date:    15:49:48 03/29/2024 
 // Design Name: 
-// Module Name:    MUX16_4 
+// Module Name:    periodcounter 
 // Project Name: 
 // Target Devices: 
 // Tool versions: 
@@ -18,15 +18,22 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module MUX16_4(
-	input [15:0]dat,
-	input [1:0]adr,
-	output wire [3:0]do
+module periodcounter(
+	input sig,
+	input ce1ms,
+	output reg [15:0] period = 1
 );
 
-assign do = (adr==0)? dat[3:0]:
-				(adr==1)? dat[7:4]:
-				(adr==2)? dat[11:8]:
-							 dat[15:12];
+reg [15:0] CNT = 1;
+reg [15:0] prev = 0;
+
+always @(posedge ce1ms) begin
+	CNT <= CNT + 1;
+end
+
+always @(posedge sig) begin
+	period <= CNT - prev;
+	prev <= CNT;
+end
 
 endmodule
